@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>map test</title>
-	<style> #map { width: 100%; height: 600px;} 
+	<style> #map { width: 70%; height: 600px;position: relative;display: inline-block;} 
 	/*#content { height: 120px;width: 400px;border-radius: 20px; position: relative;} */
 	.gm-style-iw {
 	width: 350px !important;
@@ -57,15 +57,32 @@
 	background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 	background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
 }
+.filtre {display: inline-block;}
+.ingenierie img {width: 60px; height: 60px;}
+.ingenierie img:hover { transform: scale(1.3); }
+
 		</style>
 		
 <body> 
 	<div id="map">
-		
+		</div>
+		  <div class="filtre">
+			<div class="ingenierie">
+			<img src="ingenierie2.png" alt="">
+				<h3>Ingenierie</h3>
+		</div>
+		<div class="immobilier">
+			<img src="immobilier2.png" alt="">
+				<h3>immobilier</h3>
+		</div>
+		<div class="amenagement">
+			<img src="amenagement2.png" alt="">
+				<h3>amenagement</h3>
+		</div>
 	</div>
 	<script type="text/javascript">
 
-		var data = [
+var data = [
 			{country: 'ingenierie', name: 'Paris', lat: 20.904788036065646, lng: 55.498504064567086},
 			{country: 'ingenierie', name: 'Melun', lat: -20.889987, lng: 55.500152},
 			{country: 'ingenierie', name: 'Lyon', lat: -20.873431, lng: 55.452629},
@@ -325,7 +342,7 @@ var troisieme_zoom = [
 // Save Markers by location
 var placeMarkerList = {};
 // Checks every place
-
+$(document).ready(function(){
 
 for (var i = 0; i < data.length; ++i) {
 	var place = data[i];
@@ -338,8 +355,10 @@ for (var i = 0; i < data.length; ++i) {
 // Creates the marker and save it in place marker list
 var marker = new google.maps.Marker({
 	position: latLng,
+	id: 'marker',
 	icon : 'https://s3-eu-west-1.amazonaws.com/test-sodiac/' + place.country + '1.png'
 });
+
 placeMarkerList[place.country].push(marker);
 
 var contentString = '<div id="iw-container">' +
@@ -429,19 +448,17 @@ google.maps.event.addListener(infowindow, 'domready', function() {
     	$(this).css({opacity: '1'});
     });
 });
+});
 }
-initMap();
 
+initMap();
 
 </script>
 <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJOFC4-EpSUSX4ESCjFUvEHcI_FfsmLCk&callback=initMap">
 </script>
-<script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
+	<script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
 
 </body>
 </html>
