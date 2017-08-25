@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>map test</title>
+	<style> #map { width: 100%; height: 600px;} 
+	#content { height: 120px;width: 400px;border-radius: 20px; position: relative;} 
+	#titre { text-align: center; margin-top: 30px; }	
+	#content img { border-radius: 90px;
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    margin-left: 176px;
+    margin-top: -213px;
+    border: double 6px;}
+		</style>
+	
+</head>
+<body>
+	<div id="map">
+		
+	</div>
+	<script type="text/javascript">
+
+		var data = [
+		{country: 'ingenierie', name: 'Paris', lat: 20.904788036065646, lng: 55.498504064567086},
+		{country: 'ingenierie', name: 'Melun', lat: -20.889987, lng: 55.500152},
+		{country: 'ingenierie', name: 'Lyon', lat: -20.873431, lng: 55.452629},
+
+		{country: 'habitat', name: 'Berlin', lat: -20.948746, lng: 55.281660},
+		{country: 'habitat', name: 'Baden Baden', lat: -20.895015, lng: 55.497857},
+		{country: 'habitat', name: 'Berlin', lat: -21.326289, lng: 55.608400},
+		{country: 'habitat', name: 'Baden Baden', lat:  -20.913092, lng: 55.620134},
+		{country: 'habitat', name: 'Berlin', lat: -20.908671, lng: 55.605084},
+		{country: 'habitat', name: 'Baden Baden', lat: -21.346450, lng: 55.492311},
+		{country: 'habitat', name: 'Berlin', lat: -20.890523, lng: 55.443799},
+		{country: 'habitat', name: 'Baden Baden', lat: -21.020964, lng: 55.264664},
+
+		{country: 'amenagement', name: 'Londres', lat: -21.34296, lng: 55.494574},
+		{country: 'amenagement', name: 'Bristol', lat: -20.888212, lng: 55.469084},
+		{country:'amenagement', name: 'Plymouth', lat: -21.026939, lng: 55.268634},
+			{country: 'amenagement', name: 'Londres', lat: -20.888738, lng: 55.501599},
+			{country: 'amenagement', name: 'Bristol', lat: -20.931442, lng: 55.298157},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.907459, lng: 55.503217},
+			{country: 'amenagement', name: 'Londres', lat: -20.926038, lng: 55.454804},
+			{country: 'amenagement', name: 'Bristol', lat: -20.890375411758, lng: 55.478247832507},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.913568159019, lng: 55.477636288851},
+
+			{country: 'amenagement', name: 'Londres', lat: -20.9000754, lng: 55.5013121},
+			{country: 'amenagement', name: 'Bristol', lat: -20.8960772, lng: 55.489854},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.932525568395, lng: 55.295120095834},
+			{country: 'amenagement', name: 'Londres', lat: -20.9320153, lng: 55.2949112},
+			{country: 'amenagement', name: 'Bristol', lat: -20.9065427, lng: 55.5005946},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.895779976115, lng: 55.4460264},
+			{country: 'amenagement', name: 'Londres', lat: -20.905792827343, lng: 55.603423928842},
+			{country: 'amenagement', name: 'Bristol', lat: -20.890375411758, lng: 55.478247832507},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.913568159019, lng: 55.477636288851},
+			{country: 'amenagement', name: 'Londres', lat: -20.9000754, lng: 55.5013121},
+			{country: 'amenagement', name: 'Bristol', lat: -20.8960772, lng: 55.489854},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.932525568395, lng: 55.295120095834},
+			{country: 'amenagement', name: 'Londres', lat: -20.9320153, lng: 55.2949112},
+			{country: 'amenagement', name: 'Bristol', lat: -20.9065427, lng: 55.5005946},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.895779976115, lng: 55.4460264},
+			{country: 'amenagement', name: 'Londres', lat: -20.905792827343, lng: 55.603423928842},
+			{country: 'amenagement', name: 'Bristol', lat: -20.890375411758, lng: 55.478247832507},
+			{country: 'amenagement', name: 'Plymouth', lat: -20.913568159019, lng: 55.477636288851},
+			];
+//zoom de depart avec le minimun d'affichage
+var zoom_depart = [					
+					{
+						featureType: 'poi',
+						elementType: 'labels.text.fill',
+						stylers: [{color: 'blue'}]
+					},
+					{ 
+						featureType: "administrative.neighborhood",
+						stylers:[{visibility: "on"}],
+					},
+					{
+						featureType: "administrative.natural",
+						stylers:[{visibility: "on"}]
+					},
+					{
+						featureType: "administrative.locality",
+						stylers:[{visibility: "off"}]
+					},
+					{
+						featureType: "administrative.province",
+						stylers:[{visibility: "off"}]
+					},
+					{
+						featureType: "landscape.man_made",
+						stylers: [{ visibility: "off"}]
+					},
+					{
+						featureType: "landscape.natural",
+						stylers:[{visibility:"off"}],
+					},
+					{
+						featureType: "landscape.natural.landcover",
+						elementType: "geometry",
+						stylers: [{visibility:"on"}]
+					},
+					{
+						featureType: "poi",
+						stylers:[{ color: "#e9eaee"},{visibility: "on"}]
+					},
+					{
+						featureType: "poi",
+						elementType: "labels.text",
+						stylers: [{visibility : "off"}]
+					},
+					{
+						featureType: "poi.business",
+						stylers: [{visibility : "off"}]
+					},
+					{
+						featureType: "road",
+						stylers: [{visibility : "off"}]
+					},
+					{
+						featureType: 'water',
+						elementType: 'geometry.fill',
+						stylers: [{ color: '#ffffff'}]
+					},
+					{
+						featureType: "water",
+						elementType: "labels.text",
+						stylers: [{visibility : "off"}]
+					}
+					
+				];
+//affichage des grand axe ainsi que des villes				
+var second_zoom = [
+					{
+  				featureType: 'poi',
+  				elementType: 'labels.text.fill',
+  				stylers: [{color: 'blue'}]
+  			},
+  			{ 
+  				featureType: "administrative.neighborhood",
+  				stylers:[{visibility: "off"}],
+  			},
+  			{
+  				featureType: "administrative.province",
+  				stylers:[{visibility: "off"}]
+  			},
+  			{
+  				featureType: "landscape.man_made",
+  				stylers: [{ visibility: "off"}]
+  			},
+  			{
+  				featureType: "landscape.natural",
+  				elementType: "geometry.fill",
+  				stylers: [{color: "#c2c6d1"},{visibility:"off"}],
+  			},
+  			{
+  				featureType: "landscape.natural.landcover",
+  				elementType: "geometry",
+  				stylers: [{visibility:"off"}]
+  			},
+  			{
+  				featureType: "poi",
+  				stylers:[{ color: "#e9eaee"},{visibility: "on"}]
+  			},
+  			{
+  				featureType: "poi",
+  				elementType: "labels.text",
+  				stylers: [{visibility : "off"}]
+  			},
+  			{
+  				featureType: "poi.business",
+  				stylers: [{visibility : "off"}]
+  			},
+  			{
+  				featureType: "road.highway",
+  				stylers: [{visibility:"simplified"}]	
+  			},
+  			{
+  				featureType: "road.arterial",
+  				stylers: [{visibility : "off"}]
+  			},
+  			{
+  				featureType: "road.local",
+  				stylers: [{visibility : "off"}]
+  			},
+  			{
+  				featureType: 'water',
+  				elementType: 'geometry.fill',
+  				stylers: [{ color: '#ffffff'}]
+  			},
+  			{
+  				featureType: "water",
+  				elementType: "labels.text",
+  				stylers: [{visibility : "off"}]
+  			}
+					]
+//Affichage quand le zoom est le plus proche (entre 10 et 1)
+var troisieme_zoom = [
+						{
+  				featureType: 'poi',
+  				elementType: 'labels.text.fill',
+  				stylers: [{color: 'blue'}]
+  			},
+  			{ 
+  				featureType: "administrative.neighborhood",
+  				stylers:[{visibility: "off"}],
+  			},
+  			{
+  				featureType: "landscape.man_made",
+  				stylers: [{ visibility: "off"}]
+  			},
+  			{
+  				featureType: "landscape.natural",
+  				elementType: "geometry.fill",
+  				stylers: [{color: "#c2c6d1"},{visibility:"off"}],
+  			},
+  			{
+  				featureType: "landscape.natural.landcover",
+  				elementType: "geometry",
+  				stylers: [{visibility:"off"}]
+  			},
+  			{
+  				featureType: "poi",
+  				stylers:[{ color: "#e9eaee"},{visibility: "off"}]
+  			},
+  			{
+  				featureType: "poi",
+  				elementType: "labels.text",
+  				stylers: [{visibility : "on"}]
+  			},
+  			{
+  				featureType: "poi.business",
+  				stylers: [{visibility : "on"}]
+  			},
+  			{
+  				featureType: "road.highway",
+  				stylers: [{visibility:"on"}]	
+  			},
+  			{
+  				featureType: "road.arterial",
+  				stylers: [{visibility : "on"}]
+  			},
+  			{
+  				featureType: "road.local",
+  				stylers: [{visibility : "on"}]
+  			},
+  			{
+  				featureType: 'water',
+  				elementType: 'geometry.fill',
+  				stylers: [{ color: '#ffffff'}]
+  			},
+  			{
+  				featureType: "water",
+  				elementType: "labels.text",
+  				stylers: [{visibility : "off"}]
+  			}		
+						]
+
+				console.log(zoom_depart);
+			function initMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+					center: {lat: -21.123157, lng:  55.54253},
+					zoom: 10,
+					styles :zoom_depart,
+					scrollwheel: false			
+				});
+  google.maps.event.addDomListener(map,'zoom_changed', function() {
+  	var zoom =  map.getZoom();
+  	if (zoom >=15 && zoom <=20) { 
+  		map.setOptions({
+  			styles : troisieme_zoom
+  		});
+
+  	}else if(zoom <= 10 && zoom >= 1){
+  		map.setOptions({
+  			styles : zoom_depart
+  		})
+  	}else if(zoom >=12 && zoom <=14){
+  		map.setOptions({
+  			styles : second_zoom
+  		})
+  	}
+  });
+
+// Save Markers by location
+var placeMarkerList = {};
+// Checks every place
+
+for (var i = 0; i < data.length; ++i) {
+	var place = data[i];
+	var latLng = new google.maps.LatLng(place.lat, place.lng);
+
+
+	if(!placeMarkerList.hasOwnProperty(place.country)) {
+		placeMarkerList[place.country] = [];
+	}
+
+	var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h1 id="titre" class="firstHeading">Zodiac</h1>'+
+      
+      '<div id="bodyContent">'+
+
+      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+      'sandstone rock formation in the southern part of the '+
+      'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+      'south west of the nearest large town, Alice Springs; 450&#160;km '+
+      '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+      'Aboriginal people of the area. It has many springs, waterholes, '+
+      'rock caves and ancient paintings. Uluru is listed as a World '+
+      'Heritage Site.</p>'+
+      '<img src="sodiac2.jpeg"/>'
+      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+      '(last visited June 22, 2009).</p>'+
+      '</div>'+
+      '</div>';
+
+       var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+// Creates the marker and save it in place marker list
+var marker = new google.maps.Marker({
+	position: latLng,
+	icon : 'https://s3-eu-west-1.amazonaws.com/test-sodiac/' + place.country + '1.png'
+});
+
+ marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+
+placeMarkerList[place.country].push(marker);
+}
+//Recentrage de la map en responsive
+google.maps.event.addDomListener(window, 'resize', function() {
+	var center = map.getCenter();
+	google.maps.event.trigger(map, "resize");
+	map.setCenter(center);    
+}); 
+// Parse every country to display a cluster for the country
+for (var country in placeMarkerList) {
+	if (placeMarkerList.hasOwnProperty(country)) {
+		var markerCluster = new MarkerClusterer(map,placeMarkerList[country],{
+			imagePath: 'https://s3-eu-west-1.amazonaws.com/test-sodiac/' + country,
+			zoomOnClick: true,
+
+		});
+	}
+
+}
+
+}
+initMap();
+
+
+</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJOFC4-EpSUSX4ESCjFUvEHcI_FfsmLCk&callback=initMap">
+</script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+</body>
+</html>
